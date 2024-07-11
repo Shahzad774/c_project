@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
+from tensorflow.keras.models import load_model
 import yfinance as yf
 from datetime import datetime, timedelta
 from sklearn.preprocessing import MinMaxScaler
@@ -33,7 +34,6 @@ def create_datasets(data, n_past, n_future):
 
 st.set_page_config(page_title='Cryptocurrency Price Prediction', layout='wide')
 
-# Sidebar menu
 with st.sidebar:
     selected = option_menu(
         menu_title="Main Menu",
@@ -46,12 +46,11 @@ with st.sidebar:
 
 if selected == "Home":
     st.title('Cryptocurrency Price Prediction')
-    st.image('crypto.jpg', use_column_width=True)  
+    st.image('crypto.jpg', use_column_width=True) 
     st.write("""
     This app predicts the future prices of cryptocurrencies using a Long Short-Term Memory (LSTM) model.
     Select a cryptocurrency from the sidebar to get started.
     """)
-
 
 if selected == "Prediction":
     st.title('Cryptocurrency Price Prediction')
@@ -102,4 +101,5 @@ if selected == "Prediction":
             fig2.add_trace(go.Scatter(x=list(range(len(y_pred))), y=y_pred.flatten(), mode='lines', name='Predicted Price'))
             fig2.update_layout(title='Predicted vs Actual Prices', xaxis_title='Time', yaxis_title='Price')
             st.plotly_chart(fig2, use_container_width=True)
+
 
